@@ -188,13 +188,39 @@ Sistem memiliki 2 role:
 
 Dokumentasi lengkap API endpoints tersedia di file `API_DOCUMENTATION.md`.
 
-Endpoint utama:
+### Default Credentials (Development)
+
+Setelah menjalankan seed script, gunakan kredensial berikut:
+
+**Admin:**
+- Email: `admin@posyandu.com`
+- Password: `Admin123`
+
+**Petugas:**
+- Email: `petugas1@posyandu.com`
+- Password: `Petugas123`
+
+### Endpoint utama:
 
 - **Authentication**: `/api/auth/*`
 - **Users Management**: `/api/users/*` (Admin only)
 - **Lansia Management**: `/api/lansia/*`
 - **Pemeriksaan**: `/api/pemeriksaan/*`
 - **Laporan**: `/api/laporan/*` (Admin only)
+
+### Testing
+
+Jalankan test suite lengkap:
+
+```bash
+node test-api-complete.js
+```
+
+Hasil test tersedia di `TEST_SUMMARY.md` dengan success rate **94.29%** (33/35 tests passed).
+
+### Postman Collection
+
+Import file `Posyandu_Lansia_API.postman_collection.json` ke Postman untuk testing API dengan mudah.
 
 ## 🔍 Health Check
 
