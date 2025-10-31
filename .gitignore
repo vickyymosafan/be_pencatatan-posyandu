@@ -24,6 +24,7 @@ generated/
 # Uploads (user-generated content)
 uploads/
 !uploads/.gitkeep
+!uploads/**/.gitkeep
 
 # OS files
 .DS_Store
