@@ -2,8 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import * as lansiaService from './lansia.service';
 import { successResponse, paginatedResponse } from '../../utils/response.util';
 import { CreateLansiaDTO, UpdateLansiaDTO, LansiaFilterDTO } from './lansia.types';
-import fs from 'fs';
-import path from 'path';
 
 /**
  * Lansia Controller
@@ -171,11 +169,11 @@ export const deleteLansiaHandler = async (
 };
 
 /**
- * Get QR Code handler
+ * Get QR Code URL handler
  * GET /api/lansia/qr/:id
  * 
  * @param id - Lansia ID
- * @returns QR Code image file (PNG)
+ * @returns QR Code public URL dari Supabase Storage
  * @throws 404 jika lansia atau QR code tidak ditemukan
  * 
  * Requirements: 5.4
@@ -188,19 +186,12 @@ export const getQRCodeHandler = async (
   try {
     const { id } = req.params;
 
-    const qrCodeUrl = await lansiaService.getQRCodePath(id);
+    const qrCodeUrl = await lansiaService.getQRCodeUrl(id);
 
-    // Convert relative URL path ke absolute file path
-    const filePath = path.join(process.cwd(), qrCodeUrl);
-
-    // Check if file exists
-    if (!fs.existsSync(filePath)) {
-      return next(new Error('QR Code file tidak ditemukan'));
-    }
-
-    // Set content type dan send file
-    res.setHeader('Content-Type', 'image/png');
-    res.sendFile(filePath);
+    // Return public URL atau redirect ke URL
+    res.status(200).json(
+      successResponse('QR Code URL berhasil diambil', { qr_code_url: qrCodeUrl }, req.path)
+    );
   } catch (error) {
     next(error);
   }

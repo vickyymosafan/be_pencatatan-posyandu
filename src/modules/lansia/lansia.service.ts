@@ -251,15 +251,15 @@ export const deleteLansia = async (id: string): Promise<void> => {
 };
 
 /**
- * Get QR Code file path untuk lansia
+ * Get QR Code public URL untuk lansia
  * 
  * @param id - Lansia ID
- * @returns QR Code file path
+ * @returns QR Code public URL dari Supabase Storage
  * @throws NotFoundError jika lansia tidak ditemukan atau QR code tidak ada
  * 
  * Requirements: 5.4
  */
-export const getQRCodePath = async (id: string): Promise<string> => {
+export const getQRCodeUrl = async (id: string): Promise<string> => {
   const lansia = await prisma.lansia.findUnique({
     where: { id },
     select: {

@@ -8,19 +8,22 @@ Backend API untuk sistem manajemen rekam medis digital posyandu lansia yang diba
 - **Framework**: Express.js v5.x
 - **Language**: TypeScript v5.x
 - **ORM**: Prisma v6.x
-- **Database**: PostgreSQL v14+
+- **Database**: Supabase (PostgreSQL)
+- **Storage**: Supabase Storage (QR Codes)
 - **Authentication**: JWT (JSON Web Token)
 - **Security**: Helmet, CORS, Express Rate Limit
 - **Validation**: Express Validator
 - **QR Code**: qrcode library
+- **Deployment**: Render (recommended)
 
 ## 📋 Prerequisites
 
 Pastikan sistem Anda sudah terinstall:
 
 - Node.js v18 atau lebih tinggi
-- PostgreSQL v14 atau lebih tinggi
 - npm atau yarn package manager
+- Akun Supabase (untuk database & storage)
+- Akun Render (untuk deployment - optional)
 
 ## 🔧 Instalasi
 
@@ -52,8 +55,8 @@ Kemudian edit file `.env` dan sesuaikan dengan konfigurasi Anda:
 NODE_ENV=development
 PORT=5000
 
-# Database Configuration
-DATABASE_URL=postgresql://username:password@localhost:5432/posyandu_lansia
+# Database Configuration (Supabase)
+DATABASE_URL=postgresql://postgres.xxx:password@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
 
 # JWT Configuration
 JWT_SECRET=your-super-secret-jwt-key-change-in-production
@@ -62,43 +65,35 @@ JWT_EXPIRES_IN=24h
 # CORS Configuration
 CORS_ORIGIN=http://localhost:3000
 
-# File Upload Configuration
-UPLOAD_DIR=./uploads
-QR_CODE_DIR=./uploads/qr
+# Supabase Configuration
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_STORAGE_BUCKET=qr-codes
 ```
 
 **PENTING**: 
-- Ganti `username` dan `password` dengan kredensial PostgreSQL Anda
+- Ganti `DATABASE_URL` dengan Supabase connection string
 - Ganti `JWT_SECRET` dengan string random yang kuat untuk production
+- Ganti `SUPABASE_URL` dan `SUPABASE_ANON_KEY` dari Supabase Dashboard
 - Sesuaikan `CORS_ORIGIN` dengan URL frontend Anda
 
-### 4. Setup Database
+**Cara mendapatkan Supabase credentials**: Lihat `GET_SUPABASE_KEYS.md`
 
-Buat database PostgreSQL:
+### 4. Setup Supabase Storage
+
+Setup storage bucket untuk QR codes:
 
 ```bash
-createdb posyandu_lansia
+npm run supabase:setup
 ```
 
-Atau menggunakan psql:
-
-```sql
-CREATE DATABASE posyandu_lansia;
-```
-
-### 5. Generate Prisma Client
+**Note**: Database migration sudah dijalankan di Supabase. Jika perlu generate Prisma Client:
 
 ```bash
 npm run prisma:generate
 ```
 
-### 6. Jalankan Database Migration
-
-```bash
-npm run prisma:migrate
-```
-
-### 7. (Optional) Seed Data untuk Development
+### 5. (Optional) Seed Data untuk Development
 
 ```bash
 npm run prisma:seed
@@ -127,6 +122,10 @@ Jalankan aplikasi:
 ```bash
 npm start
 ```
+
+### Deploy to Render
+
+Lihat panduan lengkap di `RENDER_DEPLOYMENT.md` atau quick start di `QUICK_START.md`
 
 ## 📁 Struktur Folder
 
@@ -168,6 +167,7 @@ be/
 | `npm run prisma:generate` | Generate Prisma Client |
 | `npm run prisma:migrate` | Jalankan database migration |
 | `npm run prisma:seed` | Seed database dengan data sample |
+| `npm run supabase:setup` | Setup Supabase Storage bucket untuk QR codes |
 
 ## 🔐 Authentication
 
@@ -265,19 +265,35 @@ Server menggunakan `ts-node-dev` untuk development yang mendukung:
 
 ## 🚀 Deployment
 
+### Quick Start
+
+Lihat `QUICK_START.md` untuk panduan cepat setup dan deploy.
+
+### Deployment Guides
+
+- **Render** (Recommended): `RENDER_DEPLOYMENT.md`
+- **Supabase Storage Setup**: `SUPABASE_STORAGE_SETUP.md`
+- **Get Supabase Keys**: `GET_SUPABASE_KEYS.md`
+
 ### Production Checklist
 
 - [ ] Set `NODE_ENV=production`
 - [ ] Gunakan `JWT_SECRET` yang kuat dan random
-- [ ] Konfigurasi `CORS_ORIGIN` dengan whitelist yang spesifik
-- [ ] Enable HTTPS
-- [ ] Setup proper logging dan monitoring
-- [ ] Konfigurasi database backups
-- [ ] Setup process manager (PM2, systemd, dll)
+- [ ] Konfigurasi `CORS_ORIGIN` dengan frontend URL
+- [ ] Setup Supabase Storage bucket (`npm run supabase:setup`)
+- [ ] Verify `SUPABASE_URL` dan `SUPABASE_ANON_KEY` benar
+- [ ] Test QR code generation & upload
+- [ ] Enable HTTPS (auto di Render)
+- [ ] Setup monitoring (Render Dashboard)
 
-### Environment Variables Production
+### Why Render?
 
-Pastikan semua environment variables sudah di-set dengan benar di production environment.
+- ✅ Free tier: 750 hours/month
+- ✅ Auto-deploy dari GitHub
+- ✅ No persistent disk needed (Supabase Storage)
+- ✅ Easy environment variables management
+- ✅ Built-in SSL/HTTPS
+- ✅ Upgrade to $7/month untuk 24/7 uptime
 
 ## 📝 License
 
