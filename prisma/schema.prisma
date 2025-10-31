@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  PETUGAS
+}
+
+model User {
+  id          String        @id @default(uuid())
+  nama        String
+  email       String        @unique
+  password    String
+  role        Role          @default(PETUGAS)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  pemeriksaan Pemeriksaan[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Lansia {
+  id              String        @id @default(uuid())
+  nama            String
+  nik             String        @unique
+  tanggal_lahir   DateTime
+  alamat          String
+  penyakit_bawaan String
+  kontak_keluarga String
+  qr_code_url     String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  pemeriksaan     Pemeriksaan[]
+
+  @@index([nik])
+  @@index([nama])
+  @@map("lansia")
+}
+
+model Pemeriksaan {
+  id            String   @id @default(uuid())
+  lansiaId      String
+  tanggal       DateTime @default(now())
+  tekanan_darah String
+  berat_badan   String
+  gula_darah    String
+  kolesterol    String
+  keluhan       String   @db.Text
+  createdBy     String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  lansia Lansia @relation(fields: [lansiaId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [createdBy], references: [id], onDelete: Restrict)
+
+  @@index([lansiaId])
+  @@index([createdBy])
+  @@index([tanggal])
+  @@map("pemeriksaan")
+}
