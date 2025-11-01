@@ -32,7 +32,7 @@ app.use(helmet());
  * CORS Configuration
  * Allow requests from specified origins
  */
-const corsOrigins = process.env.CORS_ORIGIN?.split(',') || ['http://localhost:3000'];
+const corsOrigins = process.env.CORS_ORIGIN?.split(',') || ['https://pencatatan-posyandu-ilju.vercel.app'];
 app.use(
   cors({
     origin: corsOrigins,
