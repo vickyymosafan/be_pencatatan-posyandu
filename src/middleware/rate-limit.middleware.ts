@@ -32,17 +32,20 @@ export const loginLimiter = rateLimit({
 
 /**
  * General API rate limiter
- * Limits API requests to 100 requests per 15 minutes per IP
+ * Limits API requests per IP address
+ * 
+ * Development: 1000 requests per 15 minutes (for testing)
+ * Production: 500 requests per 15 minutes (reasonable for normal usage)
  * 
  * @example
  * app.use('/api', apiLimiter);
  */
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // 100 requests per window
+  max: process.env.NODE_ENV === 'development' ? 1000 : 500, // Adjust based on environment
   message: {
     success: false,
-    message: 'Terlalu banyak request. Silakan coba lagi nanti.',
+    message: 'Terlalu banyak request. Silakan coba lagi dalam beberapa menit.',
     timestamp: new Date().toISOString(),
   },
   standardHeaders: true,
