@@ -14,7 +14,7 @@ Backend API untuk sistem manajemen rekam medis digital posyandu lansia yang diba
 - **Security**: Helmet, CORS, Express Rate Limit
 - **Validation**: Express Validator
 - **QR Code**: qrcode library
-- **Deployment**: Render (recommended)
+- **Deployment**: Vercel
 
 ## 📋 Prerequisites
 
@@ -23,7 +23,7 @@ Pastikan sistem Anda sudah terinstall:
 - Node.js v18 atau lebih tinggi
 - npm atau yarn package manager
 - Akun Supabase (untuk database & storage)
-- Akun Render (untuk deployment - optional)
+- Akun Vercel (untuk deployment)
 
 ## 🔧 Instalasi
 
@@ -77,7 +77,7 @@ SUPABASE_STORAGE_BUCKET=qr-codes
 - Ganti `SUPABASE_URL` dan `SUPABASE_ANON_KEY` dari Supabase Dashboard
 - Sesuaikan `CORS_ORIGIN` dengan URL frontend Anda
 
-**Cara mendapatkan Supabase credentials**: Lihat `GET_SUPABASE_KEYS.md`
+**Cara mendapatkan Supabase credentials**: Lihat `ENV_CONFIGURATION.md`
 
 ### 4. Setup Supabase Storage
 
@@ -123,9 +123,9 @@ Jalankan aplikasi:
 npm start
 ```
 
-### Deploy to Render
+### Deploy to Vercel
 
-Lihat panduan lengkap di `RENDER_DEPLOYMENT.md` atau quick start di `QUICK_START.md`
+Lihat panduan lengkap di `ENV_CONFIGURATION.md` untuk setup environment variables dan deployment ke Vercel.
 
 ## 📁 Struktur Folder
 
@@ -265,15 +265,13 @@ Server menggunakan `ts-node-dev` untuk development yang mendukung:
 
 ## 🚀 Deployment
 
-### Quick Start
+### Deployment Guide
 
-Lihat `QUICK_START.md` untuk panduan cepat setup dan deploy.
-
-### Deployment Guides
-
-- **Render** (Recommended): `RENDER_DEPLOYMENT.md`
-- **Supabase Storage Setup**: `SUPABASE_STORAGE_SETUP.md`
-- **Get Supabase Keys**: `GET_SUPABASE_KEYS.md`
+Lihat panduan lengkap di **`ENV_CONFIGURATION.md`** untuk:
+- Setup environment variables backend dan frontend
+- Deploy backend ke Vercel
+- Connect frontend lokal ke backend production
+- Deploy frontend ke Vercel
 
 ### Production Checklist
 
@@ -283,17 +281,18 @@ Lihat `QUICK_START.md` untuk panduan cepat setup dan deploy.
 - [ ] Setup Supabase Storage bucket (`npm run supabase:setup`)
 - [ ] Verify `SUPABASE_URL` dan `SUPABASE_ANON_KEY` benar
 - [ ] Test QR code generation & upload
-- [ ] Enable HTTPS (auto di Render)
-- [ ] Setup monitoring (Render Dashboard)
+- [ ] Enable HTTPS (auto di Vercel)
+- [ ] Setup monitoring (Vercel Dashboard)
 
-### Why Render?
+### Why Vercel?
 
-- ✅ Free tier: 750 hours/month
+- ✅ Free tier dengan generous limits
 - ✅ Auto-deploy dari GitHub
-- ✅ No persistent disk needed (Supabase Storage)
+- ✅ Zero-config deployment
 - ✅ Easy environment variables management
 - ✅ Built-in SSL/HTTPS
-- ✅ Upgrade to $7/month untuk 24/7 uptime
+- ✅ Edge network untuk performance optimal
+- ✅ Serverless functions support
 
 ## 📝 License
 
