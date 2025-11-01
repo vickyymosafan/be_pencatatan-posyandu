@@ -97,7 +97,7 @@ export const paginatedResponse = <T>(
   total: number,
   message: string = 'Data retrieved successfully'
 ): ApiResponse<{
-  items: T[];
+  data: T[];
   pagination: {
     page: number;
     limit: number;
@@ -111,7 +111,7 @@ export const paginatedResponse = <T>(
     success: true,
     message,
     data: {
-      items: data,
+      data: data,
       pagination: {
         page,
         limit,
