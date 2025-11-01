@@ -1,0 +1,45 @@
+# Dependencies
+node_modules
+
+# Environment variables (will be set in Vercel dashboard)
+.env
+.env.local
+.env.*.local
+
+# Build output (Vercel will build)
+dist
+build
+
+# Logs
+logs
+*.log
+
+# Testing
+testing
+coverage
+.nyc_output
+test-qr-upload.js
+
+# Documentation (not needed in production)
+*.md
+!README.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Uploads (using Supabase Storage)
+uploads/
+
+# Scripts (not needed in production)
+scripts/

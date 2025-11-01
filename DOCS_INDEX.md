@@ -24,8 +24,10 @@ Panduan lengkap untuk setup, development, dan deployment backend Posyandu Lansia
 
 | File | Description | When to Read |
 |------|-------------|--------------|
-| **[QUICK_START.md](QUICK_START.md)** | Quick setup & deployment guide (15 min) | Ready to deploy |
-| **[RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)** | Detailed Render deployment guide | Deploying to Render |
+| **[VERCEL_QUICK_START.md](VERCEL_QUICK_START.md)** | ⭐ Vercel deployment (5 min, FREE!) | **RECOMMENDED** |
+| **[VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)** | Detailed Vercel deployment guide | Deploying to Vercel |
+| **[VERCEL_REFACTOR_SUMMARY.md](VERCEL_REFACTOR_SUMMARY.md)** | Vercel refactor technical details | Understanding changes |
+| **[RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)** | Render deployment guide (needs card) | Alternative platform |
 | **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** | Complete deployment checklist | Before & during deployment |
 
 ### Technical Documentation
